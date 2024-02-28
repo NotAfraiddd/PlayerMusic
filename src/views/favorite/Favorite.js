@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Favorite() {
   return (
-    <div>Favorite</div>
+    <div className="screen-container">Favorite</div>
   )
 }
