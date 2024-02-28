@@ -1,9 +1,10 @@
-function App() {
+import React from 'react';
+import Home from './views/home/Home';
+
+export default function App() {
   return (
-    <div className="App">
-      <h1 className="bg-slate-700">abc</h1>
+    <div>
+      <Home />
     </div>
   );
 }
-
-export default App;

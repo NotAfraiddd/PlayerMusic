@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url(./shared/globalStyles.css);
 body {
   margin: 0;
   box-sizing: border-box;
