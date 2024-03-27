@@ -20,11 +20,26 @@ export default function Home() {
       window.localStorage.setItem('token', _token);
       setToken(_token); // using auto update when token is updated or is expired
       setClientToken(_token); // using for authentication in API requests
+      if (token) {
+        const expirationTime = new Date(Number(token.expires_in) * 1000).getTime(); // Giả sử token chứa thông tin thời gian hết hạn trong trường expires_in
+        const currentTime = new Date().getTime();
+        const timeUntilExpiration = expirationTime - currentTime;
+        if (timeUntilExpiration <= 0) {
+          clearToken(); // If the token has expired, delete it
+        } else {
+          setTimeout(clearToken, timeUntilExpiration); // If the token has expired, delete it
+        }
+      }
     } else {
       setToken(token);
       setClientToken(token);
     }
   }, []);
+  const clearToken = () => {
+    window.localStorage.removeItem('token');
+    setToken(null);
+    setClientToken(null);
+  };
   return !isToken ? (
     <Login />
   ) : (

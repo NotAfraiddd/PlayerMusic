@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         primaryOrange: '#E99D72',
+        primaryBorder: 'rgb(30 42 62)',
       },
     },
   },
