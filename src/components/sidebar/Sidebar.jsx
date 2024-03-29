@@ -9,9 +9,16 @@ import apiClient from '../../apis/spotify';
 export default function Sidebar() {
   const [image, setImage] = useState();
   useEffect(() => {
-    apiClient.get('me').then((res) => {
-      setImage(res?.data?.images[1]?.url);
-    });
+    apiClient
+      .get('me')
+      .then((res) => {
+        setImage(res?.data?.images[1]?.url);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          localStorage.removeItem('token');
+        }
+      });
   });
   return (
     <div className="sidebar-container mx-1 h-full flex flex-col items-center justify-between">
