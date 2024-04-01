@@ -11,7 +11,7 @@
 
 .albumImage-shadow {
   z-index: -1;
-  top: 25px;
+  top: 20px;
   -webkit-filter: blur(10px);
   filter: blur(10px);
 }

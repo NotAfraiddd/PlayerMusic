@@ -1,12 +1,12 @@
 import React from 'react';
-import AlbumImage from './AlbumImage';
-import AlbumInfo from './AlbumInfo';
+import AlbumImage from './albumImage/AlbumImage';
+import AlbumInfo from './albumInfo/AlbumInfo';
 
 export default function SongCard({ album }) {
   return (
-    <div className="w-full h-3/5 bg-[#27354d] rounded-[30px] rounded-br-none">
+    <div className="w-full flex flex-col h-3/5 justify-center items-center bg-[#27354d] rounded-[30px] rounded-br-none">
       <AlbumImage url={album?.images[0]?.url} />
-      {/* <AlbumInfo album={album} /> */}
+      <AlbumInfo album={album} />
     </div>
   );
 }
