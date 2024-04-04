@@ -8,7 +8,7 @@ export default function Player() {
   const location = useLocation();
   const [tracks, setTracks] = useState([]);
   const [currrentTrack, setCurrrentTrack] = useState({});
-  const [currrentIndex, setCurrrentIndex] = useState({});
+  const [currrentIndex, setCurrrentIndex] = useState(0);
   useEffect(() => {
     if (location.state) {
       apiClient.get('playlists/' + location.state?.id + '/tracks').then((res) => {
@@ -23,7 +23,7 @@ export default function Player() {
       <div className="left-player-body w-[70%] mr-[2%]">left</div>
       <div className="right-player-body w-[30%] flex flex-col justify-between">
         <SongCard album={currrentTrack.album} />
-        <Queue />
+        <Queue tracks={tracks} setCurrrentTrack={setCurrrentIndex} />
       </div>
     </div>
   );
