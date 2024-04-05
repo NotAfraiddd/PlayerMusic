@@ -3,8 +3,15 @@ import './AudioPlayer.css';
 import ProcessCircle from './ProcessCircle';
 import WaveAnimation from './WaveAnimation';
 import Controls from './Controls';
-
+import { notification } from 'antd';
 export default function AudioPLayer({ currentTrack, currentIndex, setCurrentIndex, total }) {
+  const openNotificationWithIcon = (type, name) => {
+    notification[type]({
+      message: 'Notification',
+      description: `${name} is currently unavailable`,
+    });
+  };
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [trackProgress, setTrackProgress] = useState(0);
   var audioSrc = total[currentIndex]?.track.preview_url;
@@ -34,7 +41,7 @@ export default function AudioPLayer({ currentTrack, currentIndex, setCurrentInde
   useEffect(() => {
     if (audioRef.current.src) {
       if (isPlaying) {
-        // audioRef.current.play();
+        audioRef.current.play();
         startTimer();
       } else {
         clearInterval(intervalRef.current);
@@ -43,7 +50,7 @@ export default function AudioPLayer({ currentTrack, currentIndex, setCurrentInde
     } else {
       if (isPlaying) {
         audioRef.current = new Audio(audioSrc);
-        // audioRef.current.play();
+        audioRef.current.play();
         startTimer();
       } else {
         clearInterval(intervalRef.current);
@@ -59,9 +66,17 @@ export default function AudioPLayer({ currentTrack, currentIndex, setCurrentInde
     setTrackProgress(audioRef.current.currentTime);
 
     if (isReady.current) {
-      // audioRef.current.play();
-      setIsPlaying(true);
-      startTimer();
+      if (audioSrc) {
+        audioRef.current.play();
+        setIsPlaying(true);
+        startTimer();
+      } else {
+        const name = currentTrack?.name;
+        openNotificationWithIcon('warning', name);
+        setTimeout(() => {
+          // handleNext(); // Tự động chuyển sang bài hát tiếp theo nếu không có audio
+        }, 3000);
+      }
     } else {
       isReady.current = true;
     }
@@ -110,7 +125,7 @@ export default function AudioPLayer({ currentTrack, currentIndex, setCurrentInde
         <p className="song-artist text-sm text-[#9aa9c2]">{artists?.join(' | ')}</p>
         <div className="player-body__right-bottom flex flex-col items-center w-full">
           <div className="song-duration w-1/2 flex justify-between items-center mb-5">
-            <p className="duration text-xl font-bold text-[#c4d0e3]">0:01</p>
+            <p className="duration text-xl font-bold text-[#c4d0e3]">0:{addZero(Math.round(trackProgress))}</p>
             <WaveAnimation isPlaying={true} />
             <p className="duration text-xl font-bold text-[#c4d0e3]">0:30</p>
           </div>

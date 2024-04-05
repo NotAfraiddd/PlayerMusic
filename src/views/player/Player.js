@@ -26,7 +26,12 @@ export default function Player() {
   return (
     <div className="screen-container flex">
       <div className="left-player-body w-[70%] mr-[2%]">
-        <AudioPlayer currentTrack={currrentTrack} currentIndex={currrentIndex} total={tracks} />
+        <AudioPlayer
+          currentTrack={currrentTrack}
+          currentIndex={currrentIndex}
+          setCurrentIndex={setCurrrentIndex}
+          total={tracks}
+        />
       </div>
       <div className="right-player-body w-[30%] flex flex-col justify-between">
         <SongCard album={currrentTrack?.album} />
