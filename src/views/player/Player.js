@@ -3,6 +3,7 @@ import apiClient from '../../apis/spotify';
 import { useLocation } from 'react-router-dom';
 import SongCard from '../../components/SongCard';
 import Queue from '../../components/queue/Queue';
+import AudioPlayer from '../../components/audio/AudioPlayer';
 
 export default function Player() {
   const location = useLocation();
@@ -18,11 +19,17 @@ export default function Player() {
     }
   }, [location, location.state]);
 
+  useEffect(() => {
+    setCurrrentTrack(tracks[currrentIndex]?.track);
+  }, [currrentIndex, tracks]);
+
   return (
     <div className="screen-container flex">
-      <div className="left-player-body w-[70%] mr-[2%]">left</div>
+      <div className="left-player-body w-[70%] mr-[2%]">
+        <AudioPlayer currentTrack={currrentTrack} currentIndex={currrentIndex} total={tracks} />
+      </div>
       <div className="right-player-body w-[30%] flex flex-col justify-between">
-        <SongCard album={currrentTrack.album} />
+        <SongCard album={currrentTrack?.album} />
         <Queue tracks={tracks} setCurrrentTrack={setCurrrentIndex} />
       </div>
     </div>
